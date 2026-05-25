@@ -1,6 +1,8 @@
 # LG TV Remote
 A small LG WebOS TV control project using [bscpylgtv](https://github.com/chros73/bscpylgtv/) with a Flask API server and a custom Unified Remote.
 
+nircmd.exe to swap audio output for PC.
+
 ## Features
 
 - Connects to an LG WebOS TV over the network.
