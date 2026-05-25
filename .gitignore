@@ -1,1 +1,2 @@
-.aiopylgtv.sqlite
+*.sqlite
+*.ps1
