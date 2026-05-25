@@ -130,7 +130,7 @@ def vol_down():
 
 @app.route('/tv/toggle-mute')
 def toggle_mute():
-    return respond(*tv.run(lambda c: c.set_muted(not c.muted)))
+    return respond(*tv.run(lambda c: c.set_mute(not c.muted)))
 
 @app.route('/tv/input/<name>')
 def set_input(name):
