@@ -28,21 +28,37 @@
         <button icon="vmute" ontap="toggle_mute" darkcolor="#262626"/>
         <button icon="vup" ontap="vol_up" darkcolor="#262626"/>
       </row>
-    </tab>
-    <tab text="Source">
       <row weight="1">
+        <button icon="refresh" ontap="quick_toggle" darkcolor="#8a5cf5"/>
+      </row>
+    </tab>
+    <tab text="Settings">
+      <row weight="2">
         <label text="Video" darkcolor="#262626"/>
       </row>
-      <row weight="3">
+      <row weight="4">
           <button text="PC" ontap="input_hdmi3" darkcolor="#8a5cf5"/>
           <button text="Switch" ontap="input_hdmi2" darkcolor="#8a5cf5"/>
       </row>
-      <row weight="1">
+      <row weight="2">
         <label text="Audio" darkcolor="#262626"/>
       </row>
-      <row weight="3">
+      <row weight="4">
         <button text="TV" ontap="audio_tv" darkcolor="#8a5cf5"/>
         <button text="PC" ontap="audio_speakers" darkcolor="#8a5cf5"/>
+      </row>
+      <row weight="2">
+        <label text="Display Scale" darkcolor="#262626"/>
+      </row>
+      <row weight="4">
+        <button text="TV" ontap="display_scale_tv" darkcolor="#8a5cf5"/>
+        <button text="PC" ontap="display_scale_pc" darkcolor="#8a5cf5"/>
+      </row>
+      <row weight="1">
+        <label text="" darkcolor="#262626"/>
+      </row>
+      <row weight="6">
+        <button text="Quick Toggle" ontap="quick_toggle" darkcolor="#8a5cf5"/>
       </row>
     </tab>
     <tab text="Numpad">
