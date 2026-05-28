@@ -2,6 +2,8 @@ import asyncio
 import threading
 import subprocess
 import logging
+import winreg
+import ctypes
 import yaml
 import os
 from flask import Flask, jsonify
@@ -12,11 +14,27 @@ import pystray
 with open('config.yaml') as f:
     cfg = yaml.safe_load(f)
 
-TV_IP           = cfg['tv']['ip']
+TV_IP               = cfg['tv']['ip']
+TV_DEFAULT_INPUT    = cfg['tv']['default_input']
+TV_PC_INPUT         = cfg['tv']['pc_input']
+TV_AUDIO_SOURCE     = cfg['tv']['audio_source']
+TV_RESOLUTION_SCALE = cfg['tv']['resolution_scale']
+
+PC_MONITOR_INDEX    = cfg['pc']['monitor_index']
+PC_AUDIO_SOURCE     = cfg['pc']['audio_source']
+PC_RESOLUTION_SCALE = cfg['pc']['resolution_scale']
+
 COMMAND_TIMEOUT = cfg['connection']['command_timeout']
 RECONNECT_DELAY = cfg['connection']['reconnect_delay']
 PING_INTERVAL   = cfg['connection']['ping_interval']
 PORT            = cfg['server']['port']
+
+INPUT_MAP = {
+    'HDMI_1': 'com.webos.app.hdmi1',
+    'HDMI_2': 'com.webos.app.hdmi2',
+    'HDMI_3': 'com.webos.app.hdmi3',
+    'HDMI_4': 'com.webos.app.hdmi4'
+}
 
 logging.basicConfig(level=logging.INFO)
 log = logging.getLogger('tv')
@@ -144,14 +162,50 @@ def button(key):
 def launch_app(app_id):
     return respond(*tv.run(lambda c: c.launch_app(app_id)))
 
-@app.route('/tv/set-audio-device/<device_name>')
+@app.route('/audio/set-device/<device_name>')
 def set_audio_device(device_name):
     switch_audio(device_name)
     return respond(True, None)
 
+@app.route('/display/set-scale/<percent>')
+def set_display_scale(percent):
+    set_scale(percent)
+    return respond(True, None)
+
+@app.route('/tv/quick-toggle')
+def quick_toggle():
+    async def toggle(c):
+        curr_input = await c.get_input()
+        mapped_input = INPUT_MAP.get(TV_PC_INPUT)
+        power_state = c.power_state['state']
+
+        print(f'Current TV input: {curr_input} (mapped: {mapped_input}), power state: {power_state}')
+
+        # PC is not active on TV, switch
+        if curr_input != mapped_input or power_state != 'Active': 
+            if (curr_input != mapped_input):
+                print('Switching TV input to PC...')
+                await c.set_input(TV_PC_INPUT)
+            if (power_state != 'Active'):
+                print('Turning TV screen on...')
+                await c.turn_screen_on()
+            switch_audio(TV_AUDIO_SOURCE)
+            set_scale(TV_RESOLUTION_SCALE)
+        # PC is active, switch back
+        else:
+            if (power_state != 'Screen Off'):
+                print('Turning TV screen off...')
+                await c.turn_screen_off()
+            switch_audio(PC_AUDIO_SOURCE)
+            set_scale(PC_RESOLUTION_SCALE)
+    return respond(*tv.run(toggle))
+
 # audio
 def switch_audio(device_name):
     subprocess.run(["nircmd.exe", "setdefaultsounddevice", device_name])
+
+def set_scale(percent):
+    subprocess.run(["SetDpi.exe", str(percent), str(PC_MONITOR_INDEX)])
 
 # tray
 def make_icon(color):

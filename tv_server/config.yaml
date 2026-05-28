@@ -1,5 +1,14 @@
 tv:
-  ip: "192.168.1.2"
+  ip: '192.168.1.2'
+  default_input: 'HDMI_2'
+  pc_input: 'HDMI_3'
+  audio_source: 'TV'
+  resolution_scale: 125
+
+pc:
+  monitor_index: 1
+  audio_source: 'Speakers'
+  resolution_scale: 100
 
 server:
   port: 8765
