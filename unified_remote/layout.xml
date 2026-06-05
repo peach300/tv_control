@@ -32,6 +32,15 @@
         <button icon="refresh" ontap="quick_toggle" darkcolor="#8a5cf5"/>
       </row>
     </tab>
+    <tab text="Apps">
+      <row>
+        <list>
+          <item image="img/jellyfin.png" text="Jellyfin" ontap="launch_jellyfin"/>
+          <item image="img/spotify.png" text="Spotify" ontap="launch_spotify"/>
+          <item image="img/youtube.png" text="YouTube" ontap="launch_youtube"/>
+        </list>
+      </row>
+    </tab>
     <tab text="Settings">
       <row weight="2">
         <label text="Video" darkcolor="#262626"/>
@@ -79,15 +88,6 @@
       </row>
       <row>
         <button text="0" ontap="numpad_0" darkcolor="#8a5cf5"/>
-      </row>
-    </tab>
-    <tab text="Apps">
-      <row>
-        <list>
-          <item text="Spotify" ontap="launch_spotify"/>
-          <item text="Netflix" ontap="launch_netflix"/>
-          <item text="YouTube" ontap="launch_youtube"/>
-        </list>
       </row>
     </tab>
   </tabs>

@@ -160,3 +160,6 @@ end
 actions.launch_youtube_tv = function()
     call("tv/launch-app/youtube.leanback.ytv.v1")
 end
+actions.launch_jellyfin = function()
+    call("tv/launch-app/org.jellyfin.webos")
+end

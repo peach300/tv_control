@@ -12,5 +12,6 @@
     "HBO Max": "com.hbo.hbomax",
     "Peacock": "com.peacock.tv",
     "Paramount+": "com.cbs-all-access.webapp.prod",
-    "YouTube TV": "youtube.leanback.ytv.v1"
+    "YouTube TV": "youtube.leanback.ytv.v1",
+    "Jellyfin": "org.jellyfin.webos"
 }

@@ -3,12 +3,12 @@ tv:
   default_input: 'HDMI_2'
   pc_input: 'HDMI_3'
   audio_source: 'TV'
-  resolution_scale: 125
+  resolution_scale: 200
 
 pc:
   monitor_index: 1
   audio_source: 'Speakers'
-  resolution_scale: 100
+  resolution_scale: 150
 
 server:
   port: 8765
@@ -17,3 +17,9 @@ connection:
   command_timeout: 5
   reconnect_delay: 10
   ping_interval: 5
+ 
+idle:
+  timeout_seconds: 10800 # 3 hours
+  ignore_if_tv_media_playing: false
+  tv_media_apps: ['spotify-beehive', 'youtube.leanback.v4', 'org.jellyfin.webos']
+  pc_media_check_cmd: ''
